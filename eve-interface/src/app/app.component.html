@@ -1,0 +1,12 @@
+
+<div class="header">
+  <h2>Meet Eve</h2>
+</div>
+
+<div *ngFor="let message of visibleConversationHistory">
+  <p>{{message.text}}</p>
+</div>
+
+<input type="text" placeholder="Say hello" (keyup.enter)="postUserMessage($event.target.value)">
+
+<router-outlet></router-outlet>
