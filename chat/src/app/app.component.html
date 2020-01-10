@@ -12,6 +12,6 @@
   <p>{{eveIsThinking ? eveTypingMessages[typingMessageIndex] : ''}}</p>
 </div> 
 
-<input type="text" id="chat-box" placeholder="Say hello" [attr.disabled]="eveIsThinking ? '' : null" #filterName (keyup.enter)="postUserMessage($event.target.value); filterName.value = ''">
+<input type="text" id="chat-box" placeholder="Say hello" [attr.disabled]="eveIsThinking ? '' : null" #userInput (keyup.enter)="postUserMessage($event.target.value); userInput.value = ''">
 
 <router-outlet></router-outlet>

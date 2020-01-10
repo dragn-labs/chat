@@ -7,6 +7,7 @@ import { Component , ElementRef, ViewChild} from '@angular/core';
 })
 export class AppComponent {
   @ViewChild('messageContainer', {static: false}) myDiv: ElementRef;
+  @ViewChild('userInput', {static: false}) userTextBox: ElementRef;
 
   conversationHistory: Message[] = [];
   visibleConversationHistory: Message[] = [];
@@ -68,6 +69,7 @@ export class AppComponent {
   }
 
   postUserMessage(message: string) {
+    this.userTextBox.nativeElement.disabled = true;
     this.conversationHistory.push({text: message, from: 'User'});
     this.updateVisibleMessages();
     if (Object.keys(this.moodsToColors).includes(message)) {
@@ -84,11 +86,13 @@ export class AppComponent {
     this.typingMessageIndex = 0;
     setTimeout(() => {
       // FIXME this is where I will send conversation to server to get the next response
-      const cannedResponses = ['[Witty reply]', '[Pithy comment]', '[Helpful insight]', '[Clarifying question]', 'Yes, I agree', 'I am not so sure', 'Thanks, I needed that', 'You\'re a good friend.'];
+      const cannedResponses = ['[Witty reply]', '[Helpful insight]', '[Clarifying question]', 'Yes, I agree', 'I am not so sure', 'Thanks, I needed that', 'You\'re a good friend.'];
       const randResponse = cannedResponses[Math.floor(Math.random() * cannedResponses.length)];
       this.conversationHistory.push({text: givenMessage || randResponse, from: 'Eve'});
       this.eveIsThinking = false;
       this.updateVisibleMessages();
+      this.userTextBox.nativeElement.disabled = false;
+      this.userTextBox.nativeElement.focus();
     }, givenMessage ? 1000 : (2000 + Math.random() * 2000));
   }
 
